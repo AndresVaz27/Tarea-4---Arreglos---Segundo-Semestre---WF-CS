@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Tarea_2___Segundo_Semestre
     {
         protected String nombre;
         protected DateTime? fechaNacimiento;
+        public string edad;
 
         public String Nombre
         {
@@ -21,19 +23,28 @@ namespace Tarea_2___Segundo_Semestre
             get { return fechaNacimiento; }
             set { fechaNacimiento = value; }
         }
-
-        public int Edad
+        string edad_;
+        public string Edad
         {
+            set { edad_ = value; }
             get
             {
-                int edad;
-                edad = (DateTime.Now.Year - fechaNacimiento.Value.Year);
-                if (fechaNacimiento.Value.Month >= DateTime.Now.Month)
+                if (fechaNacimiento.HasValue)
                 {
-                    edad--;
+                    int edad = DateTime.Now.Year - fechaNacimiento.Value.Year;
+                    if (fechaNacimiento.Value.Month > DateTime.Now.Month ||
+                        (fechaNacimiento.Value.Month == DateTime.Now.Month && fechaNacimiento.Value.Day > DateTime.Now.Day))
+                    {
+                        edad--;
+                    }
+                    return edad.ToString();
                 }
-                return edad;
+                else
+                {
+                    return edad_;
+                }
             }
+            
 
         }
         public Persona()
